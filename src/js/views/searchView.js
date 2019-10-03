@@ -19,14 +19,7 @@ export const highlightSelected = id => {
     document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active');
 };
 
-/*
-// 'Pasta with tomato and spinach'
-acc: 0 / acc + cur.length = 5 / newTitle = ['Pasta']
-acc: 5 / acc + cur.length = 9 / newTitle = ['Pasta', 'with']
-acc: 9 / acc + cur.length = 15 / newTitle = ['Pasta', 'with', 'tomato']
-acc: 15 / acc + cur.length = 18 / newTitle = ['Pasta', 'with', 'tomato']
-acc: 18 / acc + cur.length = 24 / newTitle = ['Pasta', 'with', 'tomato']
-*/
+// limiter l'affichage des titres de recettes à 17 caractères maximum, sans couper les mots
 export const limitRecipeTitle = (title, limit = 17) => {
     const newTitle = [];
     if (title.length > limit) {
@@ -37,7 +30,6 @@ export const limitRecipeTitle = (title, limit = 17) => {
             return acc + cur.length;
         }, 0);
 
-        // return the result
         return `${newTitle.join(' ')} ...`;
     }
     return title;
@@ -60,7 +52,7 @@ const renderRecipe = recipe => {
     elements.searchResList.insertAdjacentHTML('beforeend', markup);
 };
 
-// type: 'prev' or 'next'
+// créer les boutons de navigation parmi les pages de la liste de recettes
 const createButton = (page, type) => `
     <button class="btn-inline results__btn--${type}" data-goto=${type === 'prev' ? page - 1 : page + 1}>
         <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
@@ -92,12 +84,12 @@ const renderButtons = (page, numResults, resPerPage) => {
 };
 
 export const renderResults = (recipes, page = 1, resPerPage = 10) => {
-    // render results of currente page
+    // afficher les résultats de la page demandée
     const start = (page - 1) * resPerPage;
     const end = page * resPerPage;
 
     recipes.slice(start, end).forEach(renderRecipe);
 
-    // render pagination buttons
+    // afficher les boutons prev et next
     renderButtons(page, recipes.length, resPerPage);
 };

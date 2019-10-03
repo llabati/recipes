@@ -6,8 +6,6 @@ export const clearRecipe = () => {
 };
 const formatCount = count => {
     if (count) {
-        // count = 2.5 --> 5/2 --> 2 1/2
-        // count = 0.5 --> 1/2
         const newCount = Math.round(count * 10000) / 10000;
         const [int, dec] = newCount.toString().split('.').map(el => parseInt(el, 10));
 
@@ -114,10 +112,8 @@ export const renderRecipe = (recipe, isLiked) => {
 };
 
 export const updateServingsIngredients = recipe => {
-    // Update servings
     document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
 
-    // Update ingredeints
     const countElements = Array.from(document.querySelectorAll('.recipe__count'));
     countElements.forEach((el, i) => {
         el.textContent = formatCount(recipe.ingredients[i].count);
